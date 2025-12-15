@@ -38,13 +38,14 @@ jobs:
       - name: curl localhost
         run: |
           for i in {1..5}; do
-            if curl --fail http://localhost > /dev/null; then
+            if curl --fail http://localhost:2000 > /dev/null; then
               echo "Flask is up!"
-              break
+              exit 0
             else
-              echo "Flask not ready yet, retrying..."
               sleep 2
-              continue
             fi
             exit 0
           done
+
+          echo "Flask not ready!"
+          exit 1
