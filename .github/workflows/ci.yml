@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: "CI - Ripository: ${{ github.repository }} Branch: ${{ github.ref_name }}"
+name: CI
+run-name: "Ripository: ${{ github.repository }} Branch: ${{ github.ref_name }}"
 on: [push]
 jobs:
   Explore-GitHub-Actions:
