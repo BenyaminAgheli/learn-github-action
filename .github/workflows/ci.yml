@@ -55,8 +55,8 @@ jobs:
 
          echo "Flask not ready!"
          exit 1
-
-  push-registry:
+         
+ push-registry:
     runs-on: ubuntu-latest
 
     steps:
