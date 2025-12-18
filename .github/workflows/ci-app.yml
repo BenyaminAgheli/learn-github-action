@@ -1,5 +1,5 @@
 name: CI App
-run-name: check app - ${{ github.repositoryb }}
+run-name: check app - ${{ github.repository }}
 
 on:
   push:
