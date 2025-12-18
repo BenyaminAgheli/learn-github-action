@@ -10,10 +10,9 @@ on:
     paths:
       - 'nginx/**'
       - 'docker-compose.yml'
-
+jobs:
   docker-up:
     runs-on: ubuntu-latest
-    needs: test-code
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
