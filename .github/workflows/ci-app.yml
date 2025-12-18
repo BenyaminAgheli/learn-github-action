@@ -7,8 +7,8 @@ on:
       - master
     tags:
       - 'v*'
-    # paths:
-      # - 'app/**'
+    paths:
+      - 'app/**'
 
 jobs:
   test-code:
