@@ -1,62 +1,37 @@
-name: CI
-run-name: "Ripository: ${{ github.repository }} Branch: ${{ github.ref_name }}"
+name: CI App
+run-name: check app - ${{ github.repositoryb }}
 
 on:
   push:
     branches:
       - master
-      - main
     tags:
       - 'v*'
+    paths:
+      - 'app/**'
+
 jobs:
- test-code:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout code
+  test-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
        uses: actions/checkout@v5
 
-     - name: Set up python
+      - name: Set up python
        uses: actions/setup-python@v6
        with:
          python-version: '3.10'
          cache: 'pip'
 
-     - name: Install dependencies
+      - name: Install dependencies
        run: |
          python3 -m pip install -r app/requirements.txt
 
-     - name: Run pytest
+      - name: Run pytest
        run: |
          cd app && python3 -m pytest
 
- docker-up:
-   runs-on: ubuntu-latest
-   needs: test-code
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v5
-
-     - name: Setup Docker
-       uses: docker/setup-buildx-action@v2
-
-     - name: Build and Start containers
-       run: docker compose up -d
-
-     - name: curl localhost
-       run: |
-         for i in {1..5}; do
-           if curl --fail http://localhost > /dev/null; then
-             echo "Flask is up!"
-             exit 0
-           else
-             sleep 2
-           fi
-         done
-
-         echo "Flask not ready!"
-         exit 1
-         
- push-registry:
+  push-registry:
     runs-on: ubuntu-latest
     needs: test-code
     steps:
@@ -65,7 +40,7 @@ jobs:
 
       - name: Login to GHCR
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        
+
       - name: image/tag name
         run: |
           IMAGE="ghcr.io/${{ github.repository }}"
@@ -75,8 +50,8 @@ jobs:
           else
             TAG=latest
           fi
-          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV 
-          
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
+
       - name: Build and Push Docker image
         run: |
           docker build -t $IMAGE_NAME:$IMAGE_TAG ./app
