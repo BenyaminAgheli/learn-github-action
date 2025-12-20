@@ -1,4 +1,5 @@
 from flask import Flask
+#from db.functions import get_connection
 
 app = Flask(__name__)
 
