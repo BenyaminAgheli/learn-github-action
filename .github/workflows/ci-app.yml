@@ -5,14 +5,10 @@ on:
   push:
     branches:
       - master
-    # tags:
-    #   - 'v*'
-    # paths:
-    #   - 'app/**'
-
-# permissions:
-#   contents: read
-#   packages: write
+    tags:
+      - 'v*'
+    paths:
+      - 'app/**'
     
 jobs:
   test-code:
