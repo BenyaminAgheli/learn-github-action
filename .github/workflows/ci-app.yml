@@ -4,11 +4,11 @@ run-name: check app - ${{ github.repository }}
 on:
   push:
     branches:
-      - master
-    tags:
-      - 'v*'
-    paths:
-      - 'app/**'
+    #   - master
+    # tags:
+    #   - 'v*'
+    # paths:
+    #   - 'app/**'
       
 permissions:
   contents: read
