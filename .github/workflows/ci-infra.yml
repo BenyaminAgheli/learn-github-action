@@ -34,9 +34,6 @@ jobs:
       - name: Build and Start containers
         run: docker compose up -d
 
-      - name: check env
-        run: docker compose config
-
       - name: curl localhost
         run: |
          for i in {1..5}; do
@@ -51,6 +48,6 @@ jobs:
          echo "Flask not ready!"
          exit 1
 
-      - name: test db connection
+      - name: test datebase connection
         run: |
           docker compose exec -T app pytest tests/test_db.py
