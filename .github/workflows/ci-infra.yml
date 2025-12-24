@@ -43,4 +43,4 @@ jobs:
 
       - name: test db connection
         run: |
-          pytest tests/test_db.py
+          docker compose exec -T app pytest tests/test_db.py
