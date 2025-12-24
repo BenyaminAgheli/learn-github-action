@@ -2,6 +2,9 @@ name: CI infra
 run-name: check infra ${{ github.repository }}
 
 on:
+  pull_request:
+    types:
+      - closed
   push:
     branches:
       - master
@@ -10,10 +13,7 @@ on:
     paths:
       - 'nginx/**'
       - 'docker-compose.yml'
-      - '.github/workflows/ci-infra.yml'
-    pull_request:
-      types:
-        - closed
+      - '.github/workflows/**'
 jobs:
   docker-up:
     runs-on: ubuntu-latest
@@ -41,6 +41,10 @@ jobs:
          echo "Flask not ready!"
          exit 1
 
+      - name: ckeck env
+        run: |
+            docker compose exec app env | grep MYSQL
+            
       - name: test db connection
         run: |
-          docker exec -it py-app pytest tests/test_db.py
+          docker compose exec -T app pytest tests/test_db.py
