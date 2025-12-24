@@ -41,6 +41,10 @@ jobs:
          echo "Flask not ready!"
          exit 1
 
+      - name: ckeck env
+        run: |
+            docker compose exec app env | grep MYSQL
+            
       - name: test db connection
         run: |
           docker compose exec -T app pytest tests/test_db.py
